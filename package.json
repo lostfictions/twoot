@@ -1,6 +1,6 @@
 {
   "name": "twoot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "dead simple tweets and toots.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,6 +15,14 @@
     "watch:test": "jest --colors --watch"
   },
   "author": "s <https://github.com/lostfictions>",
+  "homepage": "https://github.com/lostfictions/twoot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lostfictions/twoot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lostfictions/twoot/issues"
+  },
   "license": "AGPL-3.0",
   "dependencies": {
     "form-data": "^2.3.1",
