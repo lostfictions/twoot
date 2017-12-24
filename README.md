@@ -60,7 +60,7 @@ twoot(
 ```
 
 all three methods return promises:
-- `toot` returns a mastodon [Status](https://github.com/lostfictions/documentation/blob/master/Using-the-API/API.md#status) object
+- `toot` returns a mastodon [Status](https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#status) object
 - `tweet` returns a twitter [Tweet](https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/tweet-object) object
 - `twoot` just returns an array of urls of the posted statuses, since that's probably what you care about if anything.
 
