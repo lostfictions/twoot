@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "dist",
+    "declaration": true,
+    "allowJs": false,
+    "strict": true,
+    "lib":[
+      // HACK: @types/got references WHATWG `URL` as a type, so we need to include dom.d.ts.
+      "dom",
+      "es2017"
+    ],
+    "sourceMap": true,
+    "rootDirs": ["./src"],
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+    // "allowSyntheticDefaultImports": true,
+	},
+  "include": [
+    "./src/**/*"
+  ]
+}
