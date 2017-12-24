@@ -18,7 +18,7 @@ export interface TweetConfig {
 
 export type Configs = (TootConfig | TweetConfig)[]
 
-export function twoot(configs: Configs, status: string, attachments: string[]): Promise<string[]> {
+export function twoot(configs: Configs, status: string, attachments?: string[]): Promise<string[]> {
   return Promise.all(configs.map(async config => {
     if((config as TweetConfig).consumerKey) {
       const tweetResponse = await tweet({
