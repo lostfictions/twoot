@@ -65,10 +65,5 @@ all three methods return promises:
 - `twoot` just returns an array of urls of the posted statuses, since that's probably what you care about if anything.
 
 ```js
-(async () => {
-  const urls = await twoot({ ... }, 'twoot!')
-  for(const url of urls) {
-    console.log(`twoot can be found at ${url}`)
-  }
-})()
+twoot({ ... }, 'twoot!').then(urls => { console.log(`twoots can be found at: ${urls.join(', ')}`) })
 ```
