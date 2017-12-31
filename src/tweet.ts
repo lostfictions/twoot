@@ -39,7 +39,7 @@ export async function tweet({
     const base64data = await readFile(path, { encoding: 'base64' })
     const uploadRequest: MediaUploadRequest = { media_data: base64data }
     const uploadRes = await T.post('media/upload', uploadRequest)
-    return (uploadRes.data as any as ImageUploadResponse).media_id_string
+    return (uploadRes.data as ImageUploadResponse).media_id_string
   }))
 
   const statusRequest: StatusUpdateRequest = {
