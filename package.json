@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "author": "s <https://github.com/lostfictions>",
+  "homepage": "https://github.com/lostfictions/twoot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lostfictions/twoot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lostfictions/twoot/issues"
+  },
+  "files": [
+    "dist/"
+  ],
   "license": "AGPL-3.0",
   "scripts": {
     "build": "rm -rf dist/ && tsc",

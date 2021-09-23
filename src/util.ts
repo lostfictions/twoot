@@ -5,7 +5,11 @@ import type { StatusesUpdate as TwitterStatus } from "twitter-api-client";
 
 import type { MastoAPIConfig, TwitterAPIConfig } from "./index";
 
-export const WAIT_TIME_BETWEEN_REPLIES = 3000;
+/**
+ * Kludge (or superstition) to try to avoid hitting API rate limits. Should be
+ * made configurable -- or rate limiting should just be handled better.
+ */
+export const WAIT_TIME_BETWEEN_REPLIES = 50;
 
 export function formatRejection(rej: PromiseRejectedResult): string {
   assert(Array.isArray(rej.reason));

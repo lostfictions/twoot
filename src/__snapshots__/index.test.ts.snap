@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`api snapshots handles a chain of statuses 1`] = `
+Array [
+  Object {
+    "message": "a twoot
+<time> => https://twitter.com/username/status/status_1
+====
+a reply
+<time> => https://twitter.com/username/status/status_2_inReplyTo[status_1]
+====
+a third one
+<time> => https://twitter.com/username/status/status_3_inReplyTo[status_2_inReplyTo[status_1]]",
+    "statuses": Array [
+      Object {
+        "created_at": "<time>",
+        "id_str": "status_1",
+        "text": "a twoot",
+        "user": Object {
+          "screen_name": "username",
+        },
+      },
+      Object {
+        "created_at": "<time>",
+        "id_str": "status_2_inReplyTo[status_1]",
+        "text": "a reply",
+        "user": Object {
+          "screen_name": "username",
+        },
+      },
+      Object {
+        "created_at": "<time>",
+        "id_str": "status_3_inReplyTo[status_2_inReplyTo[status_1]]",
+        "text": "a third one",
+        "user": Object {
+          "screen_name": "username",
+        },
+      },
+    ],
+    "type": "twitter-chain",
+  },
+  Object {
+    "message": "a twoot
+<time> => https://whatever.com/status_1_withMedia[]
+====
+a reply
+<time> => https://whatever.com/status_2_inReplyTo[status_1_withMedia[]]_withMedia[]
+====
+a third one
+<time> => https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
+    "statuses": Array [
+      Object {
+        "createdAt": "<time>",
+        "id": "status_1_withMedia[]",
+        "text": "a twoot",
+        "uri": "https://whatever.com/status_1_withMedia[]",
+        "visibility": "public",
+      },
+      Object {
+        "createdAt": "<time>",
+        "id": "status_2_inReplyTo[status_1_withMedia[]]_withMedia[]",
+        "text": "a reply",
+        "uri": "https://whatever.com/status_2_inReplyTo[status_1_withMedia[]]_withMedia[]",
+        "visibility": "public",
+      },
+      Object {
+        "createdAt": "<time>",
+        "id": "status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
+        "text": "a third one",
+        "uri": "https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
+        "visibility": "public",
+      },
+    ],
+    "type": "mastodon-chain",
+  },
+]
+`;
+
+exports[`api snapshots handles a simple status 1`] = `
+Array [
+  Object {
+    "message": "hello world
+<time> => https://whatever.com/status_0_withMedia[]",
+    "status": Object {
+      "createdAt": "<time>",
+      "id": "status_0_withMedia[]",
+      "text": "hello world",
+      "uri": "https://whatever.com/status_0_withMedia[]",
+      "visibility": "public",
+    },
+    "type": "mastodon",
+  },
+  Object {
+    "message": "hello world
+<time> => https://twitter.com/username/status/status_0",
+    "status": Object {
+      "created_at": "<time>",
+      "id_str": "status_0",
+      "text": "hello world",
+      "user": Object {
+        "screen_name": "username",
+      },
+    },
+    "type": "twitter",
+  },
+]
+`;
