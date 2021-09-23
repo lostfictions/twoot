@@ -1,5 +1,6 @@
 import { Status as MastoStatus } from "masto";
 import { StatusesUpdate as TwitterStatus } from "twitter-api-client";
+
 import { doToots, doToot } from "./toot";
 import { doTweets, doTweet } from "./tweet";
 import {
@@ -75,30 +76,30 @@ export interface GlobalConfig {
   rejectOnAnyFailure?: boolean;
 }
 
-interface FormattedError {
+export interface FormattedError {
   type: "error";
   message: string;
 }
 
-interface MastodonResult {
+export interface MastodonResult {
   type: "mastodon";
   message: string;
   status: MastoStatus;
 }
 
-interface MastodonChainResult {
+export interface MastodonChainResult {
   type: "mastodon-chain";
   message: string;
   statuses: MastoStatus[];
 }
 
-interface TwitterResult {
+export interface TwitterResult {
   type: "twitter";
   message: string;
   status: TwitterStatus;
 }
 
-interface TwitterChainResult {
+export interface TwitterChainResult {
   type: "twitter-chain";
   message: string;
   statuses: TwitterStatus[];
