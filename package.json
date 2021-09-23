@@ -1,8 +1,13 @@
 {
   "name": "twoot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "toot and/or tweet. a lowest-common-denominator api for simplifying crossposting to mastodon and twitter",
-  "keywords": ["mastodon", "twitter", "sns", "crosspost"],
+  "keywords": [
+    "mastodon",
+    "twitter",
+    "sns",
+    "crosspost"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "s <https://github.com/lostfictions>",
