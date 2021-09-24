@@ -50,23 +50,23 @@ a third one
 <time> => https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
     "statuses": Array [
       Object {
+        "content": "a twoot",
         "createdAt": "<time>",
         "id": "status_1_withMedia[]",
-        "text": "a twoot",
         "uri": "https://whatever.com/status_1_withMedia[]",
         "visibility": "public",
       },
       Object {
+        "content": "a reply",
         "createdAt": "<time>",
         "id": "status_2_inReplyTo[status_1_withMedia[]]_withMedia[]",
-        "text": "a reply",
         "uri": "https://whatever.com/status_2_inReplyTo[status_1_withMedia[]]_withMedia[]",
         "visibility": "public",
       },
       Object {
+        "content": "a third one",
         "createdAt": "<time>",
         "id": "status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
-        "text": "a third one",
         "uri": "https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
         "visibility": "public",
       },
@@ -82,9 +82,9 @@ Array [
     "message": "hello world
 <time> => https://whatever.com/status_0_withMedia[]",
     "status": Object {
+      "content": "hello world",
       "createdAt": "<time>",
       "id": "status_0_withMedia[]",
-      "text": "hello world",
       "uri": "https://whatever.com/status_0_withMedia[]",
       "visibility": "public",
     },

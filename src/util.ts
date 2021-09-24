@@ -29,7 +29,7 @@ export function formatRejection(rej: PromiseRejectedResult): string {
 }
 
 export const formatMastoStatus = (s: MastoStatus) =>
-  `${s.text || "<no text>"}\n${s.createdAt} => ${s.uri}`;
+  `${s.content || "<no text>"}\n${s.createdAt} => ${s.uri}`;
 
 export const formatTwitterStatus = (s: TwitterStatus) =>
   `${s.text || "<no text>"}\n${s.created_at} => https://twitter.com/${

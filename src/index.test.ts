@@ -29,7 +29,7 @@ jest.mock("masto", () => ({
           return {
             id,
             visibility,
-            text: status,
+            content: status,
             uri: `${url}/${id}`,
             createdAt: "<time>",
           };
