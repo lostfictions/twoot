@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    // https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
+    "target": "es2020",
     "lib": [
       "ES2020"
     ],

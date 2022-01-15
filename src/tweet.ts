@@ -21,7 +21,6 @@ export async function postTweet(
   const mediaIds: string[] = [];
 
   if (s.media) {
-    /* eslint-disable no-await-in-loop */
     for (const m of s.media) {
       // the twitter client doesn't seem to let us stream the buffer directly
       const buffer = "buffer" in m ? m.buffer : await readFile(m.path);
@@ -39,7 +38,6 @@ export async function postTweet(
         });
       }
     }
-    /* eslint-enable no-await-in-loop */
   }
 
   const publishedTweet = await retry(
@@ -85,7 +83,6 @@ export async function doTweets(
 
   const postedStatuses: TwitterStatus[] = [];
 
-  /* eslint-disable no-await-in-loop */
   for (let i = 0; i < statuses.length; i++) {
     const inReplyToId = i > 0 ? postedStatuses[i - 1]!.id_str : undefined;
 
@@ -95,6 +92,6 @@ export async function doTweets(
       await setTimeout(WAIT_TIME_BETWEEN_REPLIES);
     }
   }
-  /* eslint-enable no-await-in-loop */
+
   return postedStatuses;
 }

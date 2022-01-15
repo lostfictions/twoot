@@ -26,9 +26,9 @@
   "license": "AGPL-3.0",
   "scripts": {
     "build": "rm -rf dist/ && tsc",
-    "test": "run-s -l test:*",
+    "test": "run-p -cl test:*",
     "test:ts": "tsc --noEmit",
-    "test:eslint": "eslint 'src/**/*'",
+    "test:eslint": "eslint --color 'src/**/*.ts' --max-warnings=0",
     "test:jest": "jest --colors",
     "test:prettier": "prettier -l 'src/**/*'",
     "prettier": "prettier 'src/**/*' --write",
@@ -37,24 +37,24 @@
   },
   "dependencies": {
     "async-retry": "^1.3.3",
-    "masto": "^4.1.14",
-    "nanoid": "^3.1.25",
-    "twitter-api-client": "^1.3.8"
+    "masto": "^4.2.4",
+    "nanoid": "^3.1.32",
+    "twitter-api-client": "^1.5.1"
   },
   "devDependencies": {
     "@types/async-retry": "^1.4.3",
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^27.4.0",
     "@types/mock-fs": "^4.13.1",
-    "@types/node": "^16.9.6",
-    "eslint": "^7.32.0",
-    "eslint-config-lostfictions": "^1.4.1",
-    "jest": "^27.2.1",
-    "mock-fs": "^5.1.0",
+    "@types/node": "^16.11.19",
+    "eslint": "^8.6.0",
+    "eslint-config-lostfictions": "^3.1.0",
+    "jest": "^27.4.7",
+    "mock-fs": "^5.1.2",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.4.1",
-    "ts-jest": "^27.0.5",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.3"
+    "prettier": "^2.5.1",
+    "ts-jest": "^27.1.3",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   },
   "jest": {
     "preset": "ts-jest/presets/js-with-ts",
@@ -64,5 +64,8 @@
         "isolatedModules": true
       }
     }
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

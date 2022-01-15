@@ -33,9 +33,9 @@ export async function postToot(
         config["focus"] = m.focus;
       }
 
-      /* eslint-disable no-await-in-loop */
       if ("buffer" in m) {
-        // kludge: buffer uploads don't seem to work, so write them to a temp file first.
+        // kludge: buffer uploads don't seem to work, so write them to a temp
+        // file first. see https://github.com/neet/masto.js/issues/481
         const path = join(tmpdir(), `masto-upload-${nanoid()}.png`);
         await writeFile(path, m.buffer);
 
@@ -55,7 +55,6 @@ export async function postToot(
 
         mediaIds.push(id);
       }
-      /* eslint-enable no-await-in-loop */
     }
   }
 
@@ -107,7 +106,6 @@ export async function doToots(
 
   const postedStatuses: MastoStatus[] = [];
 
-  /* eslint-disable no-await-in-loop */
   for (let i = 0; i < statuses.length; i++) {
     const inReplyToId = i > 0 ? postedStatuses[i - 1]!.id : undefined;
 
@@ -117,6 +115,6 @@ export async function doToots(
       await setTimeout(WAIT_TIME_BETWEEN_REPLIES);
     }
   }
-  /* eslint-enable no-await-in-loop */
+
   return postedStatuses;
 }

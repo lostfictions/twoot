@@ -20,7 +20,7 @@ export function formatRejection(rej: PromiseRejectedResult): string {
 
   const message =
     error instanceof Error
-      ? error.stack || error.toString()
+      ? error.stack ?? error.toString()
       : JSON.stringify(error);
 
   return `${config.type}${
