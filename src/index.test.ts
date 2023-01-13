@@ -102,11 +102,7 @@ describe("api snapshots", () => {
         { status: "a twoot", media: [] },
         "a reply",
         { status: "a third one" },
-        // mock-fs seems to be buggy, so we can't test media uploads as long as
-        // masto... also buggily requires that we write to the filesystem :(
-        // https://github.com/neet/masto.js/issues/481
-        // https://github.com/tschaub/mock-fs/issues/338
-        // { status: "another one", media: [{ buffer: Buffer.from("abcdef") }] },
+        { status: "another one", media: [{ buffer: Buffer.from("abcdef") }] },
       ],
       [
         {
