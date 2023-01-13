@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`api snapshots handles a chain of statuses 1`] = `
-Array [
-  Object {
+[
+  {
     "message": "a twoot
 <time> => https://twitter.com/username/status/status_1
 ====
@@ -11,35 +11,35 @@ a reply
 ====
 a third one
 <time> => https://twitter.com/username/status/status_3_inReplyTo[status_2_inReplyTo[status_1]]",
-    "statuses": Array [
-      Object {
+    "statuses": [
+      {
         "created_at": "<time>",
         "id_str": "status_1",
         "text": "a twoot",
-        "user": Object {
+        "user": {
           "screen_name": "username",
         },
       },
-      Object {
+      {
         "created_at": "<time>",
         "id_str": "status_2_inReplyTo[status_1]",
         "text": "a reply",
-        "user": Object {
+        "user": {
           "screen_name": "username",
         },
       },
-      Object {
+      {
         "created_at": "<time>",
         "id_str": "status_3_inReplyTo[status_2_inReplyTo[status_1]]",
         "text": "a third one",
-        "user": Object {
+        "user": {
           "screen_name": "username",
         },
       },
     ],
     "type": "twitter-chain",
   },
-  Object {
+  {
     "message": "a twoot
 <time> => https://whatever.com/status_1_withMedia[]
 ====
@@ -48,22 +48,22 @@ a reply
 ====
 a third one
 <time> => https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
-    "statuses": Array [
-      Object {
+    "statuses": [
+      {
         "content": "a twoot",
         "createdAt": "<time>",
         "id": "status_1_withMedia[]",
         "uri": "https://whatever.com/status_1_withMedia[]",
         "visibility": "public",
       },
-      Object {
+      {
         "content": "a reply",
         "createdAt": "<time>",
         "id": "status_2_inReplyTo[status_1_withMedia[]]_withMedia[]",
         "uri": "https://whatever.com/status_2_inReplyTo[status_1_withMedia[]]_withMedia[]",
         "visibility": "public",
       },
-      Object {
+      {
         "content": "a third one",
         "createdAt": "<time>",
         "id": "status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
@@ -77,11 +77,11 @@ a third one
 `;
 
 exports[`api snapshots handles a simple status 1`] = `
-Array [
-  Object {
+[
+  {
     "message": "hello world
 <time> => https://whatever.com/status_0_withMedia[]",
-    "status": Object {
+    "status": {
       "content": "hello world",
       "createdAt": "<time>",
       "id": "status_0_withMedia[]",
@@ -90,14 +90,14 @@ Array [
     },
     "type": "mastodon",
   },
-  Object {
+  {
     "message": "hello world
 <time> => https://twitter.com/username/status/status_0",
-    "status": Object {
+    "status": {
       "created_at": "<time>",
       "id_str": "status_0",
       "text": "hello world",
-      "user": Object {
+      "user": {
         "screen_name": "username",
       },
     },
