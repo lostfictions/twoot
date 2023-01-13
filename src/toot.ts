@@ -3,10 +3,10 @@ import { writeFile, unlink } from "fs/promises";
 import { join } from "path";
 import { tmpdir } from "os";
 import { setTimeout } from "timers/promises";
+import { randomUUID } from "crypto";
 
 import { login, MastoClient, Status as MastoStatus } from "masto";
 import retry from "async-retry";
-import { nanoid } from "nanoid";
 
 import { WAIT_TIME_BETWEEN_REPLIES } from "./util";
 
@@ -36,7 +36,7 @@ export async function postToot(
       if ("buffer" in m) {
         // kludge: buffer uploads don't seem to work, so write them to a temp
         // file first. see https://github.com/neet/masto.js/issues/481
-        const path = join(tmpdir(), `masto-upload-${nanoid()}.png`);
+        const path = join(tmpdir(), `masto-upload-${randomUUID()}.png`);
         await writeFile(path, m.buffer);
 
         const { id } = await client.mediaAttachments.create({
@@ -58,7 +58,7 @@ export async function postToot(
     }
   }
 
-  const idempotencyKey = nanoid();
+  const idempotencyKey = randomUUID();
 
   const publishedToot = await retry(
     () =>
