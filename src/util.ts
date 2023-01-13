@@ -1,6 +1,6 @@
 import assert from "assert/strict";
 
-import type { Status as MastoStatus } from "masto";
+import type { mastodon } from "masto";
 import type { StatusesUpdate as TwitterStatus } from "twitter-api-client";
 
 import type { MastoAPIConfig, TwitterAPIConfig } from "./index";
@@ -28,7 +28,7 @@ export function formatRejection(rej: PromiseRejectedResult): string {
   } error:\n\n${message}`;
 }
 
-export const formatMastoStatus = (s: MastoStatus) =>
+export const formatMastoStatus = (s: mastodon.v1.Status) =>
   `${s.content || "<no text>"}\n${s.createdAt} => ${s.uri}`;
 
 export const formatTwitterStatus = (s: TwitterStatus) =>

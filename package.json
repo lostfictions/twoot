@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "async-retry": "^1.3.3",
-    "masto": "^4.2.4",
+    "masto": "^5.4.0",
     "twitter-api-client": "^1.5.1"
   },
   "devDependencies": {
