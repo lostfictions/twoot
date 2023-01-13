@@ -31,7 +31,7 @@ export async function postToot(
       }
 
       const { id } = await client.v2.mediaAttachments.create({
-        file: createReadStream("buffer" in m ? m.buffer : m.path),
+        file: "buffer" in m ? m.buffer : createReadStream(m.path),
         ...config,
       });
 

@@ -9,6 +9,7 @@ jest.mock("masto", () => ({
         create: jest.fn(async () => ({
           id: `m${mastoMediaCreateCallCount++}`,
         })),
+        waitFor: jest.fn(() => Promise.resolve()),
       },
     },
     v1: {
@@ -102,7 +103,14 @@ describe("api snapshots", () => {
         { status: "a twoot", media: [] },
         "a reply",
         { status: "a third one" },
-        { status: "another one", media: [{ buffer: Buffer.from("abcdef") }] },
+        {
+          status: "one with a buffer",
+          media: [{ buffer: Buffer.from("abcdef") }],
+        },
+        {
+          status: "one with a path",
+          media: [{ path: "pingu.gif" }],
+        },
       ],
       [
         {

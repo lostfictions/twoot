@@ -10,7 +10,13 @@ a reply
 <time> => https://twitter.com/username/status/status_2_inReplyTo[status_1]
 ====
 a third one
-<time> => https://twitter.com/username/status/status_3_inReplyTo[status_2_inReplyTo[status_1]]",
+<time> => https://twitter.com/username/status/status_3_inReplyTo[status_2_inReplyTo[status_1]]
+====
+one with a buffer
+<time> => https://twitter.com/username/status/status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]
+====
+one with a path
+<time> => https://twitter.com/username/status/status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]]_withMedia[m1]",
     "statuses": [
       {
         "created_at": "<time>",
@@ -36,6 +42,22 @@ a third one
           "screen_name": "username",
         },
       },
+      {
+        "created_at": "<time>",
+        "id_str": "status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]",
+        "text": "one with a buffer",
+        "user": {
+          "screen_name": "username",
+        },
+      },
+      {
+        "created_at": "<time>",
+        "id_str": "status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]]_withMedia[m1]",
+        "text": "one with a path",
+        "user": {
+          "screen_name": "username",
+        },
+      },
     ],
     "type": "twitter-chain",
   },
@@ -47,7 +69,13 @@ a reply
 <time> => https://whatever.com/status_2_inReplyTo[status_1_withMedia[]]_withMedia[]
 ====
 a third one
-<time> => https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
+<time> => https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]
+====
+one with a buffer
+<time> => https://whatever.com/status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]
+====
+one with a path
+<time> => https://whatever.com/status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]]_withMedia[m1]",
     "statuses": [
       {
         "content": "a twoot",
@@ -68,6 +96,20 @@ a third one
         "createdAt": "<time>",
         "id": "status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
         "uri": "https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
+        "visibility": "public",
+      },
+      {
+        "content": "one with a buffer",
+        "createdAt": "<time>",
+        "id": "status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]",
+        "uri": "https://whatever.com/status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]",
+        "visibility": "public",
+      },
+      {
+        "content": "one with a path",
+        "createdAt": "<time>",
+        "id": "status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]]_withMedia[m1]",
+        "uri": "https://whatever.com/status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]]_withMedia[m1]",
         "visibility": "public",
       },
     ],
