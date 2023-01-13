@@ -39,6 +39,10 @@ export async function postToot(
     }
   }
 
+  await Promise.all(
+    mediaIds.map((id) => client.v2.mediaAttachments.waitFor(id))
+  );
+
   const idempotencyKey = randomUUID();
 
   const publishedToot = await retry(
