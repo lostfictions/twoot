@@ -8,7 +8,7 @@ cross-posting to mastodon and twitter.
 > bots](https://github.com/lostfictions?tab=repositories&q=botally). i can only
 > provide limited support for other use cases on a best-effort basis.
 
-![noot and/or twoot](https://i.imgur.com/uRv31NC.gif)
+![noot and/or twoot](pingu.gif)
 
 ### install
 
