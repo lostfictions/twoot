@@ -1,40 +1,45 @@
-import mockFs from "mock-fs";
-
 import { twoot } from "./index";
 
 let mastoMediaCreateCallCount = 0;
 let mastoStatusCreateCallCount = 0;
 jest.mock("masto", () => ({
   login: jest.fn(async ({ url }: { url: string }) => ({
-    mediaAttachments: {
-      create: jest.fn(async () => ({ id: `m${mastoMediaCreateCallCount++}` })),
+    v2: {
+      mediaAttachments: {
+        create: jest.fn(async () => ({
+          id: `m${mastoMediaCreateCallCount++}`,
+        })),
+        waitFor: jest.fn(() => Promise.resolve()),
+      },
     },
-    statuses: {
-      create: jest.fn(
-        async ({
-          status,
-          visibility,
-          inReplyToId,
-          mediaIds,
-        }: {
-          status: string;
-          visibility: string;
-          inReplyToId: string;
-          mediaIds?: string[];
-        }) => {
-          const id = `status_${mastoStatusCreateCallCount++}${
-            inReplyToId ? `_inReplyTo[${inReplyToId}]` : ""
-          }${mediaIds ? `_withMedia[${mediaIds.join(",")}]` : ""}`;
-
-          return {
-            id,
+    v1: {
+      statuses: {
+        create: jest.fn(
+          async ({
+            status,
             visibility,
-            content: status,
-            uri: `${url}/${id}`,
-            createdAt: "<time>",
-          };
-        }
-      ),
+            inReplyToId,
+            mediaIds,
+          }: {
+            status: string;
+            visibility: string;
+            inReplyToId: string;
+            mediaIds?: string[];
+          }) => {
+            const id = `status_${mastoStatusCreateCallCount++}${
+              inReplyToId ? `_inReplyTo[${inReplyToId}]` : ""
+            }${mediaIds ? `_withMedia[${mediaIds.join(",")}]` : ""}`;
+
+            return {
+              id,
+              visibility,
+              content: status,
+              uri: `${url}/${id}`,
+              createdAt: "<time>",
+            };
+          }
+        ),
+      },
     },
   })),
 }));
@@ -76,14 +81,6 @@ jest.mock("twitter-api-client", () => ({
   },
 }));
 
-beforeEach(() => {
-  mockFs();
-});
-
-afterEach(() => {
-  mockFs.restore();
-});
-
 describe("api snapshots", () => {
   it("handles a simple status", async () => {
     const res = await twoot("hello world", [
@@ -97,7 +94,6 @@ describe("api snapshots", () => {
       },
     ]);
 
-    mockFs.restore();
     expect(res).toMatchSnapshot();
   });
 
@@ -107,11 +103,14 @@ describe("api snapshots", () => {
         { status: "a twoot", media: [] },
         "a reply",
         { status: "a third one" },
-        // mock-fs seems to be buggy, so we can't test media uploads as long as
-        // masto... also buggily requires that we write to the filesystem :(
-        // https://github.com/neet/masto.js/issues/481
-        // https://github.com/tschaub/mock-fs/issues/338
-        // { status: "another one", media: [{ buffer: Buffer.from("abcdef") }] },
+        {
+          status: "one with a buffer",
+          media: [{ buffer: Buffer.from("abcdef") }],
+        },
+        {
+          status: "one with a path",
+          media: [{ path: "pingu.gif" }],
+        },
       ],
       [
         {
@@ -125,7 +124,6 @@ describe("api snapshots", () => {
       ]
     );
 
-    mockFs.restore();
     expect(res).toMatchSnapshot();
   });
 });

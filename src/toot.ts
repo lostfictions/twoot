@@ -1,11 +1,8 @@
 import { createReadStream } from "fs";
-import { writeFile, unlink } from "fs/promises";
-import { join } from "path";
-import { tmpdir } from "os";
 import { setTimeout } from "timers/promises";
 import { randomUUID } from "crypto";
 
-import { login, MastoClient, Status as MastoStatus } from "masto";
+import { login, type mastodon } from "masto";
 import retry from "async-retry";
 
 import { WAIT_TIME_BETWEEN_REPLIES } from "./util";
@@ -14,17 +11,17 @@ import type { StatusOrText, Status, MastoAPIConfig } from "./index";
 
 export async function postToot(
   status: StatusOrText,
-  client: MastoClient,
+  client: mastodon.Client,
   inReplyToId?: string
-): Promise<MastoStatus> {
+): Promise<mastodon.v1.Status> {
   const s: Status = typeof status === "string" ? { status } : status;
 
   const mediaIds: string[] = [];
 
   if (s.media) {
     for (const m of s.media) {
-      // form-data really doesn't like undefined fields, so add them explicitly
-      // one-by-one.
+      // form-data really doesn't like when fields are declared but undefined,
+      // so we add them explicitly one-by-one.
       const config: Record<string, any> = {};
       if ("caption" in m) {
         config["caption"] = m.caption;
@@ -33,45 +30,31 @@ export async function postToot(
         config["focus"] = m.focus;
       }
 
-      if ("buffer" in m) {
-        // kludge: buffer uploads don't seem to work, so write them to a temp
-        // file first. see https://github.com/neet/masto.js/issues/481
-        const path = join(tmpdir(), `masto-upload-${randomUUID()}.png`);
-        await writeFile(path, m.buffer);
+      const { id } = await client.v2.mediaAttachments.create({
+        file: "buffer" in m ? m.buffer : createReadStream(m.path),
+        ...config,
+      });
 
-        const { id } = await client.mediaAttachments.create({
-          file: createReadStream(path),
-          ...config,
-        });
-
-        await unlink(path);
-
-        mediaIds.push(id);
-      } else {
-        const { id } = await client.mediaAttachments.create({
-          file: createReadStream(m.path),
-          ...config,
-        });
-
-        mediaIds.push(id);
-      }
+      mediaIds.push(id);
     }
   }
 
-  await Promise.all(mediaIds.map((id) => client.mediaAttachments.waitFor(id)));
+  await Promise.all(
+    mediaIds.map((id) => client.v2.mediaAttachments.waitFor(id))
+  );
 
   const idempotencyKey = randomUUID();
 
   const publishedToot = await retry(
     () =>
-      client.statuses.create(
+      client.v1.statuses.create(
         {
           status: s.status,
           visibility: "public",
           inReplyToId,
           mediaIds,
         },
-        idempotencyKey
+        { idempotencyKey }
       ),
     { retries: 5 }
   );
@@ -82,7 +65,7 @@ export async function postToot(
 export async function doToot(
   status: StatusOrText,
   apiConfig: MastoAPIConfig
-): Promise<MastoStatus> {
+): Promise<mastodon.v1.Status> {
   const client = await retry(() =>
     login({
       url: apiConfig.server,
@@ -97,7 +80,7 @@ export async function doToot(
 export async function doToots(
   statuses: StatusOrText[],
   apiConfig: MastoAPIConfig
-): Promise<MastoStatus[]> {
+): Promise<mastodon.v1.Status[]> {
   const client = await retry(() =>
     login({
       url: apiConfig.server,
@@ -106,7 +89,7 @@ export async function doToots(
     })
   );
 
-  const postedStatuses: MastoStatus[] = [];
+  const postedStatuses: mastodon.v1.Status[] = [];
 
   for (let i = 0; i < statuses.length; i++) {
     const inReplyToId = i > 0 ? postedStatuses[i - 1]!.id : undefined;

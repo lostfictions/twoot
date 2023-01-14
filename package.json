@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "async-retry": "^1.3.3",
-    "masto": "^4.11.1",
+    "masto": "^5.4.0",
     "twitter-api-client": "^1.5.1"
   },
   "devDependencies": {
@@ -50,7 +50,6 @@
     "eslint": "^8.31.0",
     "eslint-config-lostfictions": "^5.0.0",
     "jest": "^29.3.1",
-    "mock-fs": "^5.2.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.2",
     "ts-jest": "^29.0.5",

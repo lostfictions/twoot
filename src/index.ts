@@ -1,6 +1,3 @@
-import { Status as MastoStatus } from "masto";
-import { StatusesUpdate as TwitterStatus } from "twitter-api-client";
-
 import { doToots, doToot } from "./toot";
 import { doTweets, doTweet } from "./tweet";
 import {
@@ -8,6 +5,9 @@ import {
   formatMastoStatus,
   formatTwitterStatus,
 } from "./util";
+
+import type { StatusesUpdate as TwitterStatus } from "twitter-api-client";
+import type { mastodon } from "masto";
 
 export type StatusOrText = string | Status;
 
@@ -84,13 +84,13 @@ export interface FormattedError {
 export interface MastodonResult {
   type: "mastodon";
   message: string;
-  status: MastoStatus;
+  status: mastodon.v1.Status;
 }
 
 export interface MastodonChainResult {
   type: "mastodon-chain";
   message: string;
-  statuses: MastoStatus[];
+  statuses: mastodon.v1.Status[];
 }
 
 export interface TwitterResult {
@@ -270,7 +270,7 @@ export async function twoot(
         return { type: "error", message: formatRejection(r) };
       }
       if ("visibility" in r.value[0]!) {
-        const ss = r.value as MastoStatus[];
+        const ss = r.value as mastodon.v1.Status[];
         return {
           type: "mastodon-chain",
           message: ss.map(formatMastoStatus).join("\n====\n"),
