@@ -14,7 +14,11 @@ const { MASTODON_SERVER, MASTODON_TOKEN } = parseEnv(process.env, {
 
 void (async () => {
   const res = await twoot(
-    { status: "testing a twoot", media: [{ path: "pingu.gif" }] },
+    {
+      status: "testing a twoot",
+      media: [{ path: "pingu.gif" }],
+      visibility: "unlisted",
+    },
     { type: "mastodon", server: MASTODON_SERVER, token: MASTODON_TOKEN }
   );
 

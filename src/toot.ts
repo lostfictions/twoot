@@ -56,7 +56,7 @@ export async function postToot(
       client.v1.statuses.create(
         {
           status: s.status,
-          visibility: "public",
+          visibility: s.visibility ?? "public",
           inReplyToId,
           mediaIds,
         },

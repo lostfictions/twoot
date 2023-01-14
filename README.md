@@ -18,5 +18,6 @@ npm install twoot
 yarn add twoot
 ```
 
-full api documentation forthcoming. for now, you can check the .d.ts files,
-which include docstrings.
+full api documentation forthcoming. for now, you can check
+[`example.ts`](example.ts) and the typescript `.d.ts` definition files that are
+included when you install the package; they include docstrings.

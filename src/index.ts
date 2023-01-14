@@ -14,6 +14,11 @@ export type StatusOrText = string | Status;
 export interface Status {
   status: string;
   media?: Media[];
+  /**
+   * The visibility level the status should have when posted. Only applies to
+   * Mastodon. Defaults to "public".
+   */
+  visibility?: mastodon.v1.Status["visibility"];
 }
 
 export type Media = (
