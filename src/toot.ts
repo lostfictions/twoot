@@ -1,4 +1,4 @@
-import { createReadStream } from "fs";
+import { readFile } from "fs/promises";
 import { setTimeout } from "timers/promises";
 import { randomUUID } from "crypto";
 
@@ -30,8 +30,14 @@ export async function postToot(
         config["focus"] = m.focus;
       }
 
+      const data = "buffer" in m ? m.buffer : await readFile(m.path);
+
+      // @ts-expect-error Blob not available in node <18, see
+      // https://github.com/neet/masto.js/issues/813#issuecomment-1382606868
+      const file = "Blob" in global ? new Blob([data]) : data;
+
       const { id } = await client.v2.mediaAttachments.create({
-        file: "buffer" in m ? m.buffer : createReadStream(m.path),
+        file,
         ...config,
       });
 
