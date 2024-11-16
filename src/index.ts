@@ -125,7 +125,7 @@ export type Result =
 export async function twoot(
   status: StatusOrText,
   apiConfig: MastoAPIConfig,
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<MastodonResult>;
 
 /**
@@ -136,7 +136,7 @@ export async function twoot(
 export async function twoot(
   statuses: StatusOrText[],
   apiConfig: MastoAPIConfig,
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<MastodonChainResult>;
 
 /**
@@ -147,7 +147,7 @@ export async function twoot(
 export async function twoot(
   status: StatusOrText,
   apiConfig: TwitterAPIConfig,
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<TwitterResult>;
 
 /**
@@ -158,7 +158,7 @@ export async function twoot(
 export async function twoot(
   statuses: StatusOrText[],
   apiConfig: TwitterAPIConfig,
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<TwitterChainResult>;
 
 /**
@@ -170,7 +170,7 @@ export async function twoot(
 export async function twoot(
   status: StatusOrText,
   apiConfigs: [TwitterAPIConfig, MastoAPIConfig],
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<[FormattedError | TwitterResult, FormattedError | MastodonResult]>;
 
 /**
@@ -182,7 +182,7 @@ export async function twoot(
 export async function twoot(
   statuses: StatusOrText[],
   apiConfigs: [TwitterAPIConfig, MastoAPIConfig],
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<
   [FormattedError | TwitterChainResult, FormattedError | MastodonChainResult]
 >;
@@ -196,7 +196,7 @@ export async function twoot(
 export async function twoot(
   status: StatusOrText,
   apiConfigs: [MastoAPIConfig, TwitterAPIConfig],
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<[FormattedError | MastodonResult, FormattedError | TwitterResult]>;
 
 /**
@@ -208,7 +208,7 @@ export async function twoot(
 export async function twoot(
   statuses: StatusOrText[],
   apiConfigs: [MastoAPIConfig, TwitterAPIConfig],
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<
   [FormattedError | MastodonChainResult, FormattedError | TwitterChainResult]
 >;
@@ -222,7 +222,7 @@ export async function twoot(
 export async function twoot(
   status: StatusOrText,
   apiConfigs: APIConfig[],
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<(FormattedError | MastodonResult | TwitterResult)[]>;
 
 /**
@@ -234,7 +234,7 @@ export async function twoot(
 export async function twoot(
   statuses: StatusOrText[],
   apiConfigs: APIConfig[],
-  globalConfig?: GlobalConfig
+  globalConfig?: GlobalConfig,
 ): Promise<(FormattedError | MastodonChainResult | TwitterChainResult)[]>;
 
 /**
@@ -248,7 +248,7 @@ export async function twoot(
 export async function twoot(
   statusOrStatuses: StatusOrText | StatusOrText[],
   apiConfigOrConfigs: APIConfig | APIConfig[],
-  globalConfig: GlobalConfig = {}
+  globalConfig: GlobalConfig = {},
 ): Promise<Result | Result[]> {
   const [isSingleAPIConfig, apiConfigs] = Array.isArray(apiConfigOrConfigs)
     ? [false, apiConfigOrConfigs]
@@ -265,8 +265,8 @@ export async function twoot(
             })
           : doTweets(statusOrStatuses, config).catch((e) => {
               throw [e, config];
-            })
-      )
+            }),
+      ),
     );
     /* eslint-enable @typescript-eslint/no-throw-literal */
 
@@ -299,8 +299,8 @@ export async function twoot(
             })
           : doTweet(statusOrStatuses, config).catch((e) => {
               throw [e, config];
-            })
-      )
+            }),
+      ),
     );
     /* eslint-enable @typescript-eslint/no-throw-literal */
 
@@ -330,7 +330,7 @@ export async function twoot(
     (rejections.length > 0 && globalConfig.rejectOnAnyFailure)
   ) {
     throw new Error(
-      `Failed to twoot:\n${JSON.stringify(results, undefined, 2)}`
+      `Failed to twoot:\n${JSON.stringify(results, undefined, 2)}`,
     );
   }
 

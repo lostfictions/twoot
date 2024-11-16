@@ -37,7 +37,7 @@ jest.mock("masto", () => ({
               uri: `${url}/${id}`,
               createdAt: "<time>",
             };
-          }
+          },
         ),
       },
     },
@@ -75,7 +75,7 @@ jest.mock("twitter-api-client", () => ({
             created_at: "<time>",
             user: { screen_name: "username" },
           };
-        }
+        },
       ),
     };
   },
@@ -121,7 +121,7 @@ describe("api snapshots", () => {
           accessSecret: "jkl",
         },
         { type: "mastodon", server: "https://whatever.com", token: "xyz" },
-      ]
+      ],
     );
 
     expect(res).toMatchSnapshot();

@@ -12,7 +12,7 @@ import type { StatusOrText, Status, MastoAPIConfig } from "./index";
 export async function postToot(
   status: StatusOrText,
   client: mastodon.Client,
-  inReplyToId?: string
+  inReplyToId?: string,
 ): Promise<mastodon.v1.Status> {
   const s: Status = typeof status === "string" ? { status } : status;
 
@@ -32,9 +32,7 @@ export async function postToot(
 
       const data = "buffer" in m ? m.buffer : await readFile(m.path);
 
-      // @ts-expect-error Blob not available in node <18, see
-      // https://github.com/neet/masto.js/issues/813#issuecomment-1382606868
-      const file = "Blob" in global ? new Blob([data]) : data;
+      const file = new Blob([data]);
 
       const { id } = await client.v2.mediaAttachments.create({
         file,
@@ -46,7 +44,7 @@ export async function postToot(
   }
 
   await Promise.all(
-    mediaIds.map((id) => client.v2.mediaAttachments.waitFor(id))
+    mediaIds.map((id) => client.v2.mediaAttachments.waitFor(id)),
   );
 
   const idempotencyKey = randomUUID();
@@ -60,9 +58,9 @@ export async function postToot(
           inReplyToId,
           mediaIds,
         },
-        { idempotencyKey }
+        { idempotencyKey },
       ),
-    { retries: 5 }
+    { retries: 5 },
   );
 
   return publishedToot;
@@ -70,14 +68,14 @@ export async function postToot(
 
 export async function doToot(
   status: StatusOrText,
-  apiConfig: MastoAPIConfig
+  apiConfig: MastoAPIConfig,
 ): Promise<mastodon.v1.Status> {
   const client = await retry(() =>
     login({
       url: apiConfig.server,
       accessToken: apiConfig.token,
       timeout: 30000,
-    })
+    }),
   );
 
   return postToot(status, client);
@@ -85,14 +83,14 @@ export async function doToot(
 
 export async function doToots(
   statuses: StatusOrText[],
-  apiConfig: MastoAPIConfig
+  apiConfig: MastoAPIConfig,
 ): Promise<mastodon.v1.Status[]> {
   const client = await retry(() =>
     login({
       url: apiConfig.server,
       accessToken: apiConfig.token,
       timeout: 30000,
-    })
+    }),
   );
 
   const postedStatuses: mastodon.v1.Status[] = [];

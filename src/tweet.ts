@@ -14,7 +14,7 @@ import type { StatusOrText, Status, TwitterAPIConfig } from "./index";
 export async function postTweet(
   status: StatusOrText,
   client: TwitterClient,
-  inReplyToId?: string
+  inReplyToId?: string,
 ): Promise<TwitterStatus> {
   const s: Status = typeof status === "string" ? { status } : status;
 
@@ -48,7 +48,7 @@ export async function postTweet(
         auto_populate_reply_metadata: true,
         media_ids: mediaIds.length > 0 ? mediaIds.join(",") : undefined,
       }),
-    { retries: 5 }
+    { retries: 5 },
   );
 
   return publishedTweet;
@@ -56,7 +56,7 @@ export async function postTweet(
 
 export async function doTweet(
   status: StatusOrText,
-  apiConfig: TwitterAPIConfig
+  apiConfig: TwitterAPIConfig,
 ): Promise<TwitterStatus> {
   const client = new TwitterClient({
     apiKey: apiConfig.apiKey,
@@ -71,7 +71,7 @@ export async function doTweet(
 
 export async function doTweets(
   statuses: StatusOrText[],
-  apiConfig: TwitterAPIConfig
+  apiConfig: TwitterAPIConfig,
 ): Promise<TwitterStatus[]> {
   const client = new TwitterClient({
     apiKey: apiConfig.apiKey,

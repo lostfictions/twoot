@@ -15,12 +15,12 @@ export function formatRejection(rej: PromiseRejectedResult): string {
   assert(Array.isArray(rej.reason));
   const [error, config] = rej.reason as [
     unknown,
-    MastoAPIConfig | TwitterAPIConfig
+    MastoAPIConfig | TwitterAPIConfig,
   ];
 
   const message =
     error instanceof Error
-      ? error.stack ?? error.toString()
+      ? (error.stack ?? error.toString())
       : JSON.stringify(error);
 
   return `${config.type}${
