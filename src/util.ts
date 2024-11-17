@@ -1,9 +1,9 @@
 import assert from "assert/strict";
 
 import type { mastodon } from "masto";
-import type { StatusesUpdate as TwitterStatus } from "twitter-api-client";
 
-import type { MastoAPIConfig, TwitterAPIConfig } from "./index";
+import type { MastoAPIConfig, BskyAPIConfig } from "./index";
+import type { BskyPostResult } from "./skeet";
 
 /**
  * Kludge (or superstition) to try to avoid hitting API rate limits. Should be
@@ -15,7 +15,7 @@ export function formatRejection(rej: PromiseRejectedResult): string {
   assert(Array.isArray(rej.reason));
   const [error, config] = rej.reason as [
     unknown,
-    MastoAPIConfig | TwitterAPIConfig,
+    MastoAPIConfig | BskyAPIConfig,
   ];
 
   const message =
@@ -31,7 +31,5 @@ export function formatRejection(rej: PromiseRejectedResult): string {
 export const formatMastoStatus = (s: mastodon.v1.Status) =>
   `${s.content || "<no text>"}\n${s.createdAt} => ${s.uri}`;
 
-export const formatTwitterStatus = (s: TwitterStatus) =>
-  `${s.text || "<no text>"}\n${s.created_at} => https://twitter.com/${
-    s.user.screen_name
-  }/status/${s.id_str}`;
+export const formatBskyStatus = (s: BskyPostResult) =>
+  `${s.status || "<no text>"}\n${s.createdAt} => ${s.uri}`;

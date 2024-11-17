@@ -1,12 +1,7 @@
 import { doToots, doToot } from "./toot";
-import { doTweets, doTweet } from "./tweet";
-import {
-  formatRejection,
-  formatMastoStatus,
-  formatTwitterStatus,
-} from "./util";
+import { doSkeets, doSkeet, type BskyPostResult } from "./skeet";
+import { formatRejection, formatMastoStatus, formatBskyStatus } from "./util";
 
-import type { StatusesUpdate as TwitterStatus } from "twitter-api-client";
 import type { mastodon } from "masto";
 
 export type StatusOrText = string | Status;
@@ -53,23 +48,14 @@ export interface MastoAPIConfig {
   token: string;
 }
 
-export interface TwitterAPIConfig {
-  type: "twitter";
+export interface BskyAPIConfig {
+  type: "bsky";
 
-  /**
-   * The API Key is sometimes also referred to as the "consumer key."
-   */
-  apiKey: string;
-
-  /**
-   * The API Secret is sometimes also referred to as the "consumer secret."
-   */
-  apiSecret: string;
-  accessToken: string;
-  accessSecret: string;
+  username: string;
+  password: string;
 }
 
-export type APIConfig = MastoAPIConfig | TwitterAPIConfig;
+export type APIConfig = MastoAPIConfig | BskyAPIConfig;
 
 export interface GlobalConfig {
   /**
@@ -98,24 +84,24 @@ export interface MastodonChainResult {
   statuses: mastodon.v1.Status[];
 }
 
-export interface TwitterResult {
-  type: "twitter";
+export interface BskyResult {
+  type: "bsky";
   message: string;
-  status: TwitterStatus;
+  status: BskyPostResult;
 }
 
-export interface TwitterChainResult {
-  type: "twitter-chain";
+export interface BskyChainResult {
+  type: "bsky-chain";
   message: string;
-  statuses: TwitterStatus[];
+  statuses: BskyPostResult[];
 }
 
 export type Result =
   | FormattedError
   | MastodonResult
   | MastodonChainResult
-  | TwitterResult
-  | TwitterChainResult;
+  | BskyResult
+  | BskyChainResult;
 
 /**
  * @param status A single status.
@@ -141,81 +127,81 @@ export async function twoot(
 
 /**
  * @param status A single status.
- * @param apiConfig The Twitter configuration.
+ * @param apiConfig The Bsky configuration.
  * @param globalConfig Global configuration for the Twoot call.
  */
 export async function twoot(
   status: StatusOrText,
-  apiConfig: TwitterAPIConfig,
+  apiConfig: BskyAPIConfig,
   globalConfig?: GlobalConfig,
-): Promise<TwitterResult>;
+): Promise<BskyResult>;
 
 /**
  * @param statuses An array of statuses which will be posted as a reply chain.
- * @param apiConfig The Twitter configuration.
+ * @param apiConfig The Bsky configuration.
  * @param globalConfig Global configuration for the Twoot call.
  */
 export async function twoot(
   statuses: StatusOrText[],
-  apiConfig: TwitterAPIConfig,
+  apiConfig: BskyAPIConfig,
   globalConfig?: GlobalConfig,
-): Promise<TwitterChainResult>;
+): Promise<BskyChainResult>;
 
 /**
  * @param status A single status.
- * @param apiConfigs The Mastodon and/or Twitter configurations. Determines
+ * @param apiConfigs The Mastodon and/or Bsky configurations. Determines
  *                   which accounts will be posted to.
  * @param globalConfig Global configuration for the Twoot call.
  */
 export async function twoot(
   status: StatusOrText,
-  apiConfigs: [TwitterAPIConfig, MastoAPIConfig],
+  apiConfigs: [BskyAPIConfig, MastoAPIConfig],
   globalConfig?: GlobalConfig,
-): Promise<[FormattedError | TwitterResult, FormattedError | MastodonResult]>;
+): Promise<[FormattedError | BskyResult, FormattedError | MastodonResult]>;
 
 /**
  * @param statuses An array of statuses which will be posted as a reply chain.
- * @param apiConfigs The Mastodon and/or Twitter configurations. Determines
+ * @param apiConfigs The Mastodon and/or Bsky configurations. Determines
  *                   which accounts will be posted to.
  * @param globalConfig Global configuration for the Twoot call.
  */
 export async function twoot(
   statuses: StatusOrText[],
-  apiConfigs: [TwitterAPIConfig, MastoAPIConfig],
+  apiConfigs: [BskyAPIConfig, MastoAPIConfig],
   globalConfig?: GlobalConfig,
 ): Promise<
-  [FormattedError | TwitterChainResult, FormattedError | MastodonChainResult]
+  [FormattedError | BskyChainResult, FormattedError | MastodonChainResult]
 >;
 
 /**
  * @param status A single status.
- * @param apiConfigs The Mastodon and/or Twitter configurations. Determines
+ * @param apiConfigs The Mastodon and/or Bsky configurations. Determines
  *                   which accounts will be posted to.
  * @param globalConfig Global configuration for the Twoot call.
  */
 export async function twoot(
   status: StatusOrText,
-  apiConfigs: [MastoAPIConfig, TwitterAPIConfig],
+  apiConfigs: [MastoAPIConfig, BskyAPIConfig],
   globalConfig?: GlobalConfig,
-): Promise<[FormattedError | MastodonResult, FormattedError | TwitterResult]>;
+): Promise<[FormattedError | MastodonResult, FormattedError | BskyResult]>;
 
 /**
  * @param statuses An array of statuses which will be posted as a reply chain.
- * @param apiConfigs The Mastodon and/or Twitter configurations. Determines
+ * @param apiConfigs The Mastodon and/or Bsky configurations. Determines
  *                   which accounts will be posted to.
  * @param globalConfig Global configuration for the Twoot call.
  */
 export async function twoot(
   statuses: StatusOrText[],
-  apiConfigs: [MastoAPIConfig, TwitterAPIConfig],
+  apiConfigs: [MastoAPIConfig, BskyAPIConfig],
   globalConfig?: GlobalConfig,
 ): Promise<
-  [FormattedError | MastodonChainResult, FormattedError | TwitterChainResult]
+  [FormattedError | MastodonChainResult, FormattedError | BskyChainResult]
 >;
 
 /**
  * @param status A single status.
- * @param apiConfigs The Mastodon and/or Twitter configurations. Determines
+ * @param apiConfigs The Mastodon and/or Bsky configurations. Determines
  *                   which accounts will be posted to.
  * @param globalConfig Global configuration for the Twoot call.
  */
@@ -223,11 +209,11 @@ export async function twoot(
   status: StatusOrText,
   apiConfigs: APIConfig[],
   globalConfig?: GlobalConfig,
-): Promise<(FormattedError | MastodonResult | TwitterResult)[]>;
+): Promise<(FormattedError | MastodonResult | BskyResult)[]>;
 
 /**
  * @param statuses An array of statuses which will be posted as a reply chain.
- * @param apiConfigs The Mastodon and/or Twitter configurations. Determines
+ * @param apiConfigs The Mastodon and/or Bsky configurations. Determines
  *                   which accounts will be posted to.
  * @param globalConfig Global configuration for the Twoot call.
  */
@@ -235,12 +221,12 @@ export async function twoot(
   statuses: StatusOrText[],
   apiConfigs: APIConfig[],
   globalConfig?: GlobalConfig,
-): Promise<(FormattedError | MastodonChainResult | TwitterChainResult)[]>;
+): Promise<(FormattedError | MastodonChainResult | BskyChainResult)[]>;
 
 /**
  * @param statusOrStatuses A single status, or an array of statuses which will
  *                         be posted as a reply chain.
- * @param apiConfigOrConfigs The Mastodon and/or Twitter configuration(s).
+ * @param apiConfigOrConfigs The Mastodon and/or Bsky configuration(s).
  *                           Determines which accounts will be posted to.
  * @param globalConfig Global configuration for the Twoot call.
  * @returns
@@ -263,7 +249,7 @@ export async function twoot(
           ? doToots(statusOrStatuses, config).catch((e) => {
               throw [e, config];
             })
-          : doTweets(statusOrStatuses, config).catch((e) => {
+          : doSkeets(statusOrStatuses, config).catch((e) => {
               throw [e, config];
             }),
       ),
@@ -282,10 +268,10 @@ export async function twoot(
           statuses: ss,
         };
       }
-      const ss = r.value as TwitterStatus[];
+      const ss = r.value as BskyPostResult[];
       return {
-        type: "twitter-chain",
-        message: ss.map(formatTwitterStatus).join("\n====\n"),
+        type: "bsky-chain",
+        message: ss.map(formatBskyStatus).join("\n====\n"),
         statuses: ss,
       };
     });
@@ -297,7 +283,7 @@ export async function twoot(
           ? doToot(statusOrStatuses, config).catch((e) => {
               throw [e, config];
             })
-          : doTweet(statusOrStatuses, config).catch((e) => {
+          : doSkeet(statusOrStatuses, config).catch((e) => {
               throw [e, config];
             }),
       ),
@@ -316,8 +302,8 @@ export async function twoot(
         };
       }
       return {
-        type: "twitter",
-        message: formatTwitterStatus(r.value),
+        type: "bsky",
+        message: formatBskyStatus(r.value),
         status: r.value,
       };
     });

@@ -38,9 +38,9 @@
     "prepublishOnly": "run-s -l test build"
   },
   "dependencies": {
+    "@atproto/api": "^0.13.16",
     "async-retry": "^1.3.3",
-    "masto": "^5.4.0",
-    "twitter-api-client": "^1.5.1"
+    "masto": "^5.4.0"
   },
   "devDependencies": {
     "@types/async-retry": "1.4.9",

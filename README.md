@@ -1,7 +1,6 @@
 # twoot
 
-toot and/or tweet. a common (and lowest-common-denominator) api for simplifying
-cross-posting to mastodon and twitter.
+toot and/or ~~tweet~~ skeet. a common (and lowest-common-denominator) api for simplifying cross-posting to mastodon and ~~twitter~~ bsky.
 
 > :warning: note that this library is primarily intended for my own personal
 > hobbyist use with [my
@@ -16,8 +15,8 @@ cross-posting to mastodon and twitter.
 npm install twoot
 # OR
 yarn add twoot
+# OR
+pnpm i twoot
 ```
 
-full api documentation forthcoming. for now, you can check
-[`example.ts`](example.ts) and the typescript `.d.ts` definition files that are
-included when you install the package; they include docstrings.
+full api documentation forthcoming. for now, you can check [`example.ts`](example.ts) and the typescript `.d.ts` definition files that are included when you install the package; they include docstrings.
