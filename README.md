@@ -51,14 +51,27 @@ void (async () => {
     ],
   );
 
+  await twoot(
+    // if you pass in an array of statuses, they'll be posted as a thread.
+    [{ status: "one" }, { status: "two" }, { status: "three" }],
+    {
+      type: "mastodon",
+      server: process.env.MASTODON_SERVER,
+      token: process.env.MASTODON_TOKEN,
+    },
+    // by default `twoot` will throw if posting to *all* services fails, but you
+    // can configure it to throw if posting to *any* service fails.
+    { rejectOnAnyFailure: true },
+  );
+
   // the return value is an array of results of attempting to post to each
   // provided service. they're returned in the same order you passed them
   // in.
   for (const res of results) {
     if (res.type === "error") {
-      // by default `twoot` will throw if posting to *all* services fails.
-      // for partial successes, you're responsible for checking the return
-      // value and deciding how to handle it.
+      // if `rejectOnAnyFailure` isn't set to `true`, the return value may
+      // contain failures. you're responsible for checking for them and
+      // deciding how to handle them.
       console.error(`error while twooting:\n${res.message}\n`);
     } else if (res.type === "bsky") {
       console.log(`skeeted at '${res.status.uri}'!`);
@@ -68,7 +81,5 @@ void (async () => {
   }
 })();
 ```
-
-full api documentation forthcoming. for now, you can check [`example.ts`](example.ts) and the typescript `.d.ts` definition files that are included when you install the package; they include docstrings.
 
 ###### [more bots?](https://github.com/lostfictions?tab=repositories&q=botally)
