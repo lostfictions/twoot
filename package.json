@@ -1,6 +1,6 @@
 {
   "name": "twoot",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "toot and/or skeet. a lowest-common-denominator api for simplifying crossposting to mastodon and bsky",
   "keywords": [
     "mastodon",
