@@ -1,21 +1,22 @@
-/* eslint-disable unicorn/consistent-function-scoping */
-import { twoot } from "./index";
+import { vi, it, describe, expect } from "vitest";
+
+import { twoot } from "./index.js";
 
 let mastoMediaCreateCallCount = 0;
 let mastoStatusCreateCallCount = 0;
-jest.mock("masto", () => ({
-  login: jest.fn(async ({ url }: { url: string }) => ({
+vi.mock("masto", () => ({
+  login: vi.fn(async ({ url }: { url: string }) => ({
     v2: {
       mediaAttachments: {
-        create: jest.fn(async () => ({
+        create: vi.fn(async () => ({
           id: `m${mastoMediaCreateCallCount++}`,
         })),
-        waitFor: jest.fn(() => Promise.resolve()),
+        waitFor: vi.fn(() => Promise.resolve()),
       },
     },
     v1: {
       statuses: {
-        create: jest.fn(
+        create: vi.fn(
           async ({
             status,
             visibility,
@@ -47,12 +48,13 @@ jest.mock("masto", () => ({
 
 let bskyMediaCreateCallCount = 0;
 let bskyStatusCreateCallCount = 0;
-jest.mock("@atproto/api", () => ({
+/* eslint-disable unicorn/consistent-function-scoping -- false positive? */
+vi.mock("@atproto/api", () => ({
   AtpAgent: class {
-    uploadBlob = jest.fn(async () => ({
+    uploadBlob = vi.fn(async () => ({
       media_id_string: `m${bskyMediaCreateCallCount++}`,
     }));
-    post = jest.fn(
+    post = vi.fn(
       async ({
         text,
         reply: replyId,
@@ -76,9 +78,10 @@ jest.mock("@atproto/api", () => ({
     );
   },
 }));
+/* eslint-enable unicorn/consistent-function-scoping */
 
-xdescribe("api snapshots", () => {
-  it("handles a simple status", async () => {
+describe("api snapshots", () => {
+  it.skip("handles a simple status", async () => {
     const res = await twoot("hello world", [
       { type: "mastodon", server: "https://whatever.com", token: "xyz" },
       { type: "bsky", username: "user", password: "cool" },
@@ -87,7 +90,7 @@ xdescribe("api snapshots", () => {
     expect(res).toMatchSnapshot();
   });
 
-  it("handles a chain of statuses", async () => {
+  it.skip("handles a chain of statuses", async () => {
     const res = await twoot(
       [
         { status: "a twoot", media: [] },

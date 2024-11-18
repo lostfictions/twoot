@@ -2,8 +2,8 @@ import assert from "assert/strict";
 
 import type { mastodon } from "masto";
 
-import type { MastoAPIConfig, BskyAPIConfig } from "./index";
-import type { BskyPostResult } from "./skeet";
+import type { MastoAPIConfig, BskyAPIConfig } from "./index.js";
+import type { BskyPostResult } from "./skeet.js";
 
 /**
  * Kludge (or superstition) to try to avoid hitting API rate limits. Should be

@@ -1,7 +1,7 @@
 // @ts-check
 require("eslint-config-lostfictions/patch");
 
-/** @type {import('@typescript-eslint/experimental-utils').TSESLint.Linter.Config} */
+/** @type {import('eslint-config-lostfictions').Config} */
 module.exports = {
   extends: ["lostfictions"],
   parserOptions: { tsconfigRootDir: __dirname },

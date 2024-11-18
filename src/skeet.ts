@@ -2,13 +2,13 @@ import { readFile } from "fs/promises";
 import { setTimeout } from "timers/promises";
 
 import { AtpAgent, type AppBskyEmbedImages } from "@atproto/api";
-import { type ReplyRef } from "@atproto/api/dist/client/types/app/bsky/feed/post";
+import { type ReplyRef } from "@atproto/api/dist/client/types/app/bsky/feed/post.js";
 
 import retry from "async-retry";
 
-import { WAIT_TIME_BETWEEN_REPLIES } from "./util";
+import { WAIT_TIME_BETWEEN_REPLIES } from "./util.js";
 
-import type { StatusOrText, Status, BskyAPIConfig } from "./index";
+import type { StatusOrText, Status, BskyAPIConfig } from "./index.js";
 
 type ImageEmbed = AppBskyEmbedImages.Image;
 export type BskyRawPostResult = Awaited<

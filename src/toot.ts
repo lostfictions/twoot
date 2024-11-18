@@ -5,9 +5,9 @@ import { randomUUID } from "crypto";
 import { login, type mastodon } from "masto";
 import retry from "async-retry";
 
-import { WAIT_TIME_BETWEEN_REPLIES } from "./util";
+import { WAIT_TIME_BETWEEN_REPLIES } from "./util.js";
 
-import type { StatusOrText, Status, MastoAPIConfig } from "./index";
+import type { StatusOrText, Status, MastoAPIConfig } from "./index.js";
 
 export async function postToot(
   status: StatusOrText,

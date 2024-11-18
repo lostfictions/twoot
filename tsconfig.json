@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     // https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
-    "target": "es2020",
-    "lib": [
-      "ES2020"
-    ],
-    "module": "commonjs",
+    "lib": ["ES2023"],
+    "module": "node16",
+    "target": "ES2022",
     "outDir": "dist",
     "strict": true,
     "declaration": true,
+    "isolatedModules": true,
+    "isolatedDeclarations": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,

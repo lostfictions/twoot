@@ -1,6 +1,10 @@
-import { doToots, doToot } from "./toot";
-import { doSkeets, doSkeet, type BskyPostResult } from "./skeet";
-import { formatRejection, formatMastoStatus, formatBskyStatus } from "./util";
+import { doToots, doToot } from "./toot.js";
+import { doSkeets, doSkeet, type BskyPostResult } from "./skeet.js";
+import {
+  formatRejection,
+  formatMastoStatus,
+  formatBskyStatus,
+} from "./util.js";
 
 import type { mastodon } from "masto";
 
