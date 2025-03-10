@@ -32,4 +32,4 @@ export const formatMastoStatus = (s: mastodon.v1.Status) =>
   `${s.content || "<no text>"}\n${s.createdAt} => ${s.uri}`;
 
 export const formatBskyStatus = (s: BskyPostResult) =>
-  `${s.status || "<no text>"}\n${s.createdAt} => ${s.uri}`;
+  `${s.status || "<no text>"}\n => ${s.uri}`;

@@ -18,7 +18,6 @@ export type BskyRawPostResult = Awaited<
 export type BskyPostResult = {
   status: string;
   uri: string;
-  createdAt: string;
   rawResult: BskyRawPostResult;
 };
 
@@ -76,7 +75,6 @@ export async function postSkeet(
   return {
     status: s.status,
     uri: `https://bsky.app/profile/${apiConfig.username}/post/${publishedSkeet.uri.split("/").at(-1)}`,
-    createdAt: new Date().toISOString(),
     rawResult: publishedSkeet,
   };
 }

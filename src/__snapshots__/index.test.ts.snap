@@ -1,115 +1,115 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`api snapshots handles a chain of statuses 1`] = `
+exports[`api snapshots > handles a chain of statuses 1`] = `
 [
   {
     "message": "a twoot
-<time> => https://twitter.com/username/status/status_1
+ => https://bsky.app/profile/user/post/status_1
 ====
 a reply
-<time> => https://twitter.com/username/status/status_2_inReplyTo[status_1]
+ => https://bsky.app/profile/user/post/status_1]
 ====
 a third one
-<time> => https://twitter.com/username/status/status_3_inReplyTo[status_2_inReplyTo[status_1]]
+ => https://bsky.app/profile/user/post/status_1]]
 ====
 one with a buffer
-<time> => https://twitter.com/username/status/status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]
+ => https://bsky.app/profile/user/post/status_1]]]_withMedia[m0]
 ====
 one with a path
-<time> => https://twitter.com/username/status/status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]]_withMedia[m1]",
+ => https://bsky.app/profile/user/post/status_1]]]_withMedia[m0]]_withMedia[m1]",
     "statuses": [
       {
-        "created_at": "<time>",
-        "id_str": "status_1",
-        "text": "a twoot",
-        "user": {
-          "screen_name": "username",
+        "rawResult": {
+          "cid": "status_1",
+          "uri": "https://bsky.social/status/status_1",
         },
+        "status": "a twoot",
+        "uri": "https://bsky.app/profile/user/post/status_1",
       },
       {
-        "created_at": "<time>",
-        "id_str": "status_2_inReplyTo[status_1]",
-        "text": "a reply",
-        "user": {
-          "screen_name": "username",
+        "rawResult": {
+          "cid": "status_2_inReplyTo[https://bsky.social/status/status_1]",
+          "uri": "https://bsky.social/status/status_2_inReplyTo[https://bsky.social/status/status_1]",
         },
+        "status": "a reply",
+        "uri": "https://bsky.app/profile/user/post/status_1]",
       },
       {
-        "created_at": "<time>",
-        "id_str": "status_3_inReplyTo[status_2_inReplyTo[status_1]]",
-        "text": "a third one",
-        "user": {
-          "screen_name": "username",
+        "rawResult": {
+          "cid": "status_3_inReplyTo[https://bsky.social/status/status_2_inReplyTo[https://bsky.social/status/status_1]]",
+          "uri": "https://bsky.social/status/status_3_inReplyTo[https://bsky.social/status/status_2_inReplyTo[https://bsky.social/status/status_1]]",
         },
+        "status": "a third one",
+        "uri": "https://bsky.app/profile/user/post/status_1]]",
       },
       {
-        "created_at": "<time>",
-        "id_str": "status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]",
-        "text": "one with a buffer",
-        "user": {
-          "screen_name": "username",
+        "rawResult": {
+          "cid": "status_4_inReplyTo[https://bsky.social/status/status_3_inReplyTo[https://bsky.social/status/status_2_inReplyTo[https://bsky.social/status/status_1]]]_withMedia[m0]",
+          "uri": "https://bsky.social/status/status_4_inReplyTo[https://bsky.social/status/status_3_inReplyTo[https://bsky.social/status/status_2_inReplyTo[https://bsky.social/status/status_1]]]_withMedia[m0]",
         },
+        "status": "one with a buffer",
+        "uri": "https://bsky.app/profile/user/post/status_1]]]_withMedia[m0]",
       },
       {
-        "created_at": "<time>",
-        "id_str": "status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]]_withMedia[m1]",
-        "text": "one with a path",
-        "user": {
-          "screen_name": "username",
+        "rawResult": {
+          "cid": "status_5_inReplyTo[https://bsky.social/status/status_4_inReplyTo[https://bsky.social/status/status_3_inReplyTo[https://bsky.social/status/status_2_inReplyTo[https://bsky.social/status/status_1]]]_withMedia[m0]]_withMedia[m1]",
+          "uri": "https://bsky.social/status/status_5_inReplyTo[https://bsky.social/status/status_4_inReplyTo[https://bsky.social/status/status_3_inReplyTo[https://bsky.social/status/status_2_inReplyTo[https://bsky.social/status/status_1]]]_withMedia[m0]]_withMedia[m1]",
         },
+        "status": "one with a path",
+        "uri": "https://bsky.app/profile/user/post/status_1]]]_withMedia[m0]]_withMedia[m1]",
       },
     ],
-    "type": "twitter-chain",
+    "type": "bsky-chain",
   },
   {
     "message": "a twoot
-<time> => https://whatever.com/status_1_withMedia[]
+<time> => https://whatever.com/status_1
 ====
 a reply
-<time> => https://whatever.com/status_2_inReplyTo[status_1_withMedia[]]_withMedia[]
+<time> => https://whatever.com/status_2_inReplyTo[status_1]
 ====
 a third one
-<time> => https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]
+<time> => https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1]]
 ====
 one with a buffer
-<time> => https://whatever.com/status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]
+<time> => https://whatever.com/status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]
 ====
 one with a path
-<time> => https://whatever.com/status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]]_withMedia[m1]",
+<time> => https://whatever.com/status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]]_withMedia[m1]",
     "statuses": [
       {
         "content": "a twoot",
         "createdAt": "<time>",
-        "id": "status_1_withMedia[]",
-        "uri": "https://whatever.com/status_1_withMedia[]",
+        "id": "status_1",
+        "uri": "https://whatever.com/status_1",
         "visibility": "public",
       },
       {
         "content": "a reply",
         "createdAt": "<time>",
-        "id": "status_2_inReplyTo[status_1_withMedia[]]_withMedia[]",
-        "uri": "https://whatever.com/status_2_inReplyTo[status_1_withMedia[]]_withMedia[]",
+        "id": "status_2_inReplyTo[status_1]",
+        "uri": "https://whatever.com/status_2_inReplyTo[status_1]",
         "visibility": "public",
       },
       {
         "content": "a third one",
         "createdAt": "<time>",
-        "id": "status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
-        "uri": "https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]",
+        "id": "status_3_inReplyTo[status_2_inReplyTo[status_1]]",
+        "uri": "https://whatever.com/status_3_inReplyTo[status_2_inReplyTo[status_1]]",
         "visibility": "public",
       },
       {
         "content": "one with a buffer",
         "createdAt": "<time>",
-        "id": "status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]",
-        "uri": "https://whatever.com/status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]",
+        "id": "status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]",
+        "uri": "https://whatever.com/status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]",
         "visibility": "public",
       },
       {
         "content": "one with a path",
         "createdAt": "<time>",
-        "id": "status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]]_withMedia[m1]",
-        "uri": "https://whatever.com/status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1_withMedia[]]_withMedia[]]_withMedia[]]_withMedia[m0]]_withMedia[m1]",
+        "id": "status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]]_withMedia[m1]",
+        "uri": "https://whatever.com/status_5_inReplyTo[status_4_inReplyTo[status_3_inReplyTo[status_2_inReplyTo[status_1]]]_withMedia[m0]]_withMedia[m1]",
         "visibility": "public",
       },
     ],
@@ -118,32 +118,32 @@ one with a path
 ]
 `;
 
-exports[`api snapshots handles a simple status 1`] = `
+exports[`api snapshots > handles a simple status 1`] = `
 [
   {
     "message": "hello world
-<time> => https://whatever.com/status_0_withMedia[]",
+<time> => https://whatever.com/status_0",
     "status": {
       "content": "hello world",
       "createdAt": "<time>",
-      "id": "status_0_withMedia[]",
-      "uri": "https://whatever.com/status_0_withMedia[]",
+      "id": "status_0",
+      "uri": "https://whatever.com/status_0",
       "visibility": "public",
     },
     "type": "mastodon",
   },
   {
     "message": "hello world
-<time> => https://twitter.com/username/status/status_0",
+ => https://bsky.app/profile/user/post/status_0",
     "status": {
-      "created_at": "<time>",
-      "id_str": "status_0",
-      "text": "hello world",
-      "user": {
-        "screen_name": "username",
+      "rawResult": {
+        "cid": "status_0",
+        "uri": "https://bsky.social/status/status_0",
       },
+      "status": "hello world",
+      "uri": "https://bsky.app/profile/user/post/status_0",
     },
-    "type": "twitter",
+    "type": "bsky",
   },
 ]
 `;

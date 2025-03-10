@@ -246,19 +246,19 @@ export async function twoot(
 
   let results: Result[];
   if (Array.isArray(statusOrStatuses)) {
-    /* eslint-disable @typescript-eslint/no-throw-literal */
+    /* eslint-disable @typescript-eslint/only-throw-error */
     const settledResults = await Promise.allSettled(
       apiConfigs.map((config) =>
         config.type === "mastodon"
-          ? doToots(statusOrStatuses, config).catch((e) => {
+          ? doToots(statusOrStatuses, config).catch((e: unknown) => {
               throw [e, config];
             })
-          : doSkeets(statusOrStatuses, config).catch((e) => {
+          : doSkeets(statusOrStatuses, config).catch((e: unknown) => {
               throw [e, config];
             }),
       ),
     );
-    /* eslint-enable @typescript-eslint/no-throw-literal */
+    /* eslint-enable @typescript-eslint/only-throw-error */
 
     results = settledResults.map((r) => {
       if (r.status === "rejected") {
@@ -280,19 +280,19 @@ export async function twoot(
       };
     });
   } else {
-    /* eslint-disable @typescript-eslint/no-throw-literal */
+    /* eslint-disable @typescript-eslint/only-throw-error */
     const settledResults = await Promise.allSettled(
       apiConfigs.map((config) =>
         config.type === "mastodon"
-          ? doToot(statusOrStatuses, config).catch((e) => {
+          ? doToot(statusOrStatuses, config).catch((e: unknown) => {
               throw [e, config];
             })
-          : doSkeet(statusOrStatuses, config).catch((e) => {
+          : doSkeet(statusOrStatuses, config).catch((e: unknown) => {
               throw [e, config];
             }),
       ),
     );
-    /* eslint-enable @typescript-eslint/no-throw-literal */
+    /* eslint-enable @typescript-eslint/only-throw-error */
 
     results = settledResults.map((r) => {
       if (r.status === "rejected") {
