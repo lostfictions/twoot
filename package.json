@@ -39,26 +39,32 @@
     "prepublishOnly": "run-s -l test build"
   },
   "dependencies": {
-    "@atproto/api": "^0.14.9",
+    "@atproto/api": "^0.14.10",
     "async-retry": "^1.3.3",
-    "masto": "^5.4.0"
+    "masto": "^5.4.0",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@types/async-retry": "1.4.9",
-    "@types/node": "^22.13.10",
+    "@types/node": "^22.13.11",
     "dotenv": "^16.4.7",
-    "eslint": "^9.22.0",
-    "eslint-config-lostfictions": "7.0.0-beta.0",
+    "eslint": "^9.23.0",
+    "eslint-config-lostfictions": "7.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
-    "vitest": "^3.0.8",
+    "vitest": "^3.0.9",
     "znv": "^0.4.0",
     "zod": "^3.24.2"
   },
   "engines": {
     "node": ">=22"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
   },
   "packageManager": "pnpm@10.6.2+sha512.47870716bea1572b53df34ad8647b42962bc790ce2bf4562ba0f643237d7302a3d6a8ecef9e4bdfc01d23af1969aa90485d4cebb0b9638fa5ef1daef656f6c1b"
 }

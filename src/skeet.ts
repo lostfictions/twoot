@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import { setTimeout } from "timers/promises";
 
+import sharp from "sharp";
 import { AtpAgent, type AppBskyEmbedImages } from "@atproto/api";
 import { type ReplyRef } from "@atproto/api/dist/client/types/app/bsky/feed/post.js";
 
@@ -9,6 +10,11 @@ import retry from "async-retry";
 import { WAIT_TIME_BETWEEN_REPLIES } from "./util.js";
 
 import type { StatusOrText, Status, BskyAPIConfig } from "./index.js";
+
+// apparently you can get this with
+// agent.app._client.lex.get("lex:app.bsky.embed.images").defs.image.properties.image.maxSize
+// ...but that seems kind of flaky, so let's just hardcode it.
+const MAX_IMAGE_SIZE = 1_000_000;
 
 type ImageEmbed = AppBskyEmbedImages.Image;
 export type BskyRawPostResult = Awaited<
@@ -39,7 +45,25 @@ export async function postSkeet(
 
   if (s.media) {
     for (const m of s.media) {
-      const data = "buffer" in m ? m.buffer : await readFile(m.path);
+      let data = "buffer" in m ? m.buffer : await readFile(m.path);
+
+      // janky, but may improve failure rate for now
+      // https://docs.bsky.app/docs/advanced-guides/posts#images-embeds
+      let sh = sharp(data);
+      const meta = await sh.metadata();
+      // eslint-disable-next-line unicorn/explicit-length-check -- false pos, field might be undefined
+      if (meta.size && meta.size > MAX_IMAGE_SIZE) {
+        if (meta.width && meta.width > 2000) {
+          sh = sh.resize(2000);
+        }
+        data = await sh.jpeg({ quality: 90 }).toBuffer();
+      }
+
+      // it can't figure out aspect ratio on its own, incredibly annoying
+      const aspectRatio =
+        meta.width && meta.height
+          ? { width: meta.width, height: meta.height }
+          : undefined;
 
       const file = new Blob([data]);
 
@@ -53,6 +77,7 @@ export async function postSkeet(
       const img: ImageEmbed = {
         image: uploadRes.data.blob,
         alt: m.caption ?? "",
+        aspectRatio,
       };
 
       images.push(img);
