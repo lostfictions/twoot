@@ -83,7 +83,14 @@ export async function doSkeet(
   status: StatusOrText,
   apiConfig: BskyAPIConfig,
 ): Promise<BskyPostResult> {
-  const client = await retry(() => login(apiConfig));
+  const client = await retry(() =>
+    Promise.race([
+      login(apiConfig),
+      setTimeout(30_000).then(() => {
+        throw new Error("Error logging in: timeout exceeded!");
+      }),
+    ]),
+  );
   return postSkeet(status, client, apiConfig);
 }
 
