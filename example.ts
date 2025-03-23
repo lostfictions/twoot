@@ -19,7 +19,7 @@ void (async () => {
       media: [{ path: "pingu.gif" }],
       visibility: "unlisted",
     },
-    { type: "mastodon", server: MASTODON_SERVER, token: MASTODON_TOKEN }
+    { type: "mastodon", server: MASTODON_SERVER, token: MASTODON_TOKEN },
   );
 
   console.log(`twooted!\n\n${JSON.stringify(res, undefined, 2)}`);

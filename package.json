@@ -25,6 +25,12 @@
     "!dist/**/*.test.*",
     "dist/"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./skeet": "./dist/skeet.js",
+    "./toot": "./dist/toot.js",
+    "./raw/*": "./dist/raw-client/*.js"
+  },
   "license": "AGPL-3.0",
   "scripts": {
     "build": "rm -rf dist/ && tsc",
