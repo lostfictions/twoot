@@ -98,7 +98,15 @@ describe("api snapshots", () => {
         { status: "a third one" },
         {
           status: "one with a buffer",
-          media: [{ buffer: Buffer.from("abcdef"), caption: "abcdef" }],
+          media: [
+            {
+              buffer: Buffer.from(
+                "R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+                "base64",
+              ),
+              caption: "abcdef",
+            },
+          ],
         },
         {
           status: "one with a path",
