@@ -1,8 +1,13 @@
 # twoot
 
+<a href="https://www.npmjs.com/package/twoot">
+<img src="https://img.shields.io/npm/v/twoot.svg?logo=npm" alt="NPM version" />
+</a>
+
 toot and/or ~~tweet~~ skeet. a common (and lowest-common-denominator) api for simplifying cross-posting to mastodon and ~~twitter~~ bsky.
 
-> :warning: note that this library is primarily intended for my own personal hobbyist use with [my bots](https://github.com/lostfictions?tab=repositories&q=botally). i can only provide limited support for other use cases on a best-effort basis.
+> [!WARNING]
+> note that this library is primarily intended for my own personal hobbyist use with [my bots](https://github.com/lostfictions?tab=repositories&q=botally). i can only provide limited support for other use cases on a best-effort basis.
 
 ![noot and/or twoot](pingu.gif)
 
