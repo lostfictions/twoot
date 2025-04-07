@@ -45,23 +45,23 @@
     "prepublishOnly": "run-s -l test build"
   },
   "dependencies": {
-    "@atproto/api": "^0.14.10",
+    "@atproto/api": "^0.14.20",
     "async-retry": "^1.3.3",
     "masto": "^5.4.0",
-    "sharp": "^0.33.5"
+    "sharp": "^0.34.0"
   },
   "devDependencies": {
     "@types/async-retry": "1.4.9",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.14.0",
     "dotenv": "^16.4.7",
-    "eslint": "^9.23.0",
+    "eslint": "^9.24.0",
     "eslint-config-lostfictions": "7.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.9",
-    "znv": "^0.4.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1",
+    "znv": "^0.5.0",
     "zod": "^3.24.2"
   },
   "engines": {
