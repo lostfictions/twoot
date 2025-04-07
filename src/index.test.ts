@@ -45,6 +45,14 @@ vi.mock("masto", () => ({
 let bskyMediaCreateCallCount = 0;
 let bskyStatusCreateCallCount = 0;
 vi.mock("@atproto/api", () => ({
+  RichText: class {
+    readonly text;
+    readonly facets = [];
+    constructor({ text }: { text: string }) {
+      this.text = text;
+    }
+    detectFacets = () => {};
+  },
   AtpAgent: class {
     readonly #service;
     constructor({ service }: { service: string }) {

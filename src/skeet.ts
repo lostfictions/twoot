@@ -1,13 +1,11 @@
-import { readFile } from "fs/promises";
-import { setTimeout } from "timers/promises";
+import { readFile } from "node:fs/promises";
+import { setTimeout } from "node:timers/promises";
 
 import sharp from "sharp";
-import { AtpAgent, type AppBskyEmbedImages } from "@atproto/api";
+import { AtpAgent, type AppBskyEmbedImages, RichText } from "@atproto/api";
 import { type ReplyRef } from "@atproto/api/dist/client/types/app/bsky/feed/post.js";
 
-import retry from "async-retry";
-
-import { WAIT_TIME_BETWEEN_REPLIES } from "./util.js";
+import { doWithRetryAndTimeout, WAIT_TIME_BETWEEN_REPLIES } from "./util.js";
 
 import type { StatusOrText, Status, BskyAPIConfig } from "./index.js";
 
@@ -41,6 +39,11 @@ export async function postSkeet(
 ): Promise<BskyPostResult> {
   const s: Status = typeof status === "string" ? { status } : status;
 
+  // detect links and @mentions, since otherwise they'll simply be posted as
+  // plaintext
+  const rt = new RichText({ text: s.status });
+  await rt.detectFacets(client);
+
   const images: ImageEmbed[] = [];
 
   if (s.media) {
@@ -67,7 +70,10 @@ export async function postSkeet(
 
       const file = new Blob([data]);
 
-      const uploadRes = await client.uploadBlob(file);
+      const uploadRes = await doWithRetryAndTimeout(
+        () => client.uploadBlob(file),
+        "Uploading to Bsky",
+      );
 
       if (!uploadRes.success) {
         throw new Error(
@@ -84,7 +90,11 @@ export async function postSkeet(
     }
   }
 
-  const postConfig: Parameters<typeof client.post>[0] = { text: s.status };
+  const postConfig: Parameters<typeof client.post>[0] = {
+    $type: "app.bsky.feed.post",
+    text: rt.text,
+    facets: rt.facets,
+  };
   if (images.length > 0) {
     // https://docs.bsky.app/docs/tutorials/creating-a-post#images-embeds
     postConfig.embed = { $type: "app.bsky.embed.images", images };
@@ -93,9 +103,10 @@ export async function postSkeet(
     postConfig.reply = inReplyToId;
   }
 
-  const publishedSkeet = await retry(() => client.post(postConfig), {
-    retries: 5,
-  });
+  const publishedSkeet = await doWithRetryAndTimeout(
+    () => client.post(postConfig),
+    `Posting to Bsky`,
+  );
 
   return {
     status: s.status,
@@ -108,13 +119,9 @@ export async function doSkeet(
   status: StatusOrText,
   apiConfig: BskyAPIConfig,
 ): Promise<BskyPostResult> {
-  const client = await retry(() =>
-    Promise.race([
-      login(apiConfig),
-      setTimeout(30_000).then(() => {
-        throw new Error("Error logging in: timeout exceeded!");
-      }),
-    ]),
+  const client = await doWithRetryAndTimeout(
+    () => login(apiConfig),
+    "Logging in to Bsky",
   );
   return postSkeet(status, client, apiConfig);
 }
@@ -125,7 +132,10 @@ export async function doSkeets(
 ): Promise<BskyPostResult[]> {
   if (statuses.length === 0) return [];
 
-  const client = await retry(() => login(apiConfig));
+  const client = await doWithRetryAndTimeout(
+    () => login(apiConfig),
+    "Logging in to Bsky",
+  );
   // "Since threads of replies can get pretty long, reply posts need to
   // reference both the immediate parent post and the original root post of the
   // thread."

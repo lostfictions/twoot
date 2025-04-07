@@ -1,11 +1,10 @@
-import { readFile } from "fs/promises";
-import { setTimeout } from "timers/promises";
-import { randomUUID } from "crypto";
+import { readFile } from "node:fs/promises";
+import { setTimeout } from "node:timers/promises";
+import { randomUUID } from "node:crypto";
 
 import { login, type mastodon } from "masto";
-import retry from "async-retry";
 
-import { WAIT_TIME_BETWEEN_REPLIES } from "./util.js";
+import { WAIT_TIME_BETWEEN_REPLIES, doWithRetryAndTimeout } from "./util.js";
 
 import type { StatusOrText, Status, MastoAPIConfig } from "./index.js";
 
@@ -34,22 +33,31 @@ export async function postToot(
 
       const file = new Blob([data]);
 
-      const { id } = await client.v2.mediaAttachments.create({
-        file,
-        ...config,
-      });
+      const { id } = await doWithRetryAndTimeout(
+        () =>
+          client.v2.mediaAttachments.create({
+            file,
+            ...config,
+          }),
+        "Uploading media to Mastodon",
+      );
 
       mediaIds.push(id);
     }
   }
 
-  await Promise.all(
-    mediaIds.map((id) => client.v2.mediaAttachments.waitFor(id)),
-  );
+  await Promise.race([
+    Promise.all(mediaIds.map((id) => client.v2.mediaAttachments.waitFor(id))),
+    setTimeout(300_000).then(() => {
+      throw new Error(
+        "Timeout exceeded while waiting for Mastodon uploaded media to process!",
+      );
+    }),
+  ]);
 
   const idempotencyKey = randomUUID();
 
-  const publishedToot = await retry(
+  const publishedToot = await doWithRetryAndTimeout(
     () =>
       client.v1.statuses.create(
         {
@@ -60,7 +68,7 @@ export async function postToot(
         },
         { idempotencyKey },
       ),
-    { retries: 5 },
+    "Posting to Mastodon",
   );
 
   return publishedToot;
@@ -70,12 +78,14 @@ export async function doToot(
   status: StatusOrText,
   apiConfig: MastoAPIConfig,
 ): Promise<mastodon.v1.Status> {
-  const client = await retry(() =>
-    login({
-      url: apiConfig.server,
-      accessToken: apiConfig.token,
-      timeout: 30000,
-    }),
+  const client = await doWithRetryAndTimeout(
+    () =>
+      login({
+        url: apiConfig.server,
+        accessToken: apiConfig.token,
+        timeout: 30_000,
+      }),
+    "Logging in to Mastodon",
   );
 
   return postToot(status, client);
@@ -85,12 +95,14 @@ export async function doToots(
   statuses: StatusOrText[],
   apiConfig: MastoAPIConfig,
 ): Promise<mastodon.v1.Status[]> {
-  const client = await retry(() =>
-    login({
-      url: apiConfig.server,
-      accessToken: apiConfig.token,
-      timeout: 30000,
-    }),
+  const client = await doWithRetryAndTimeout(
+    () =>
+      login({
+        url: apiConfig.server,
+        accessToken: apiConfig.token,
+        timeout: 30_000,
+      }),
+    "Logging in to Mastodon",
   );
 
   const postedStatuses: mastodon.v1.Status[] = [];
